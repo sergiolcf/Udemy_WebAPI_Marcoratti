@@ -20,7 +20,17 @@ namespace APICatalogo.Controllers
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
+            try
+            {
+                //throw  new DataMisalignedException();
+              return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao conectar no Banco de Dados");
+            }
 
         }
 
