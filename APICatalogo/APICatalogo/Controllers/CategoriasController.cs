@@ -35,13 +35,20 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get() {
-
-            return _context.Categorias.AsNoTracking().ToList();
-        }
+        public ActionResult<IEnumerable<Categoria>> Get() => _context.Categorias.AsNoTracking().ToList();
 
         [HttpGet("{id:int}", Name ="ObterCategoria")]
-        public ActionResult<Categoria> Get(int id) { 
+        public ActionResult<Categoria> Get(int id) {
+
+
+            //throw new Exception("Exceção ao retonar o produto pelo ID");
+
+            string[] teste = null;
+
+            if(teste.Length > 0)
+            {
+
+            }
 
             var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(c => c.Id == id);
             if (categoria is null)
