@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 builder.Services.AddScoped<ApiLoggingFilter>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
