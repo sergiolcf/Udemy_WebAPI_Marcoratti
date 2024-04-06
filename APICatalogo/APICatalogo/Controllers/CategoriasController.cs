@@ -4,6 +4,7 @@ using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace APICatalogo.Controllers
 {
     [Route("[controller]")]
@@ -11,10 +12,12 @@ namespace APICatalogo.Controllers
     public class CategoriasController : Controller
     {
         public readonly AppDbContext _context;
+       private readonly ILogger<CategoriasController> _logger;
 
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(AppDbContext context, ILogger<CategoriasController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
@@ -41,23 +44,31 @@ namespace APICatalogo.Controllers
 
         [HttpGet("{id:int}", Name ="ObterCategoria")]
         public ActionResult<Categoria> Get(int id) {
+            try
+            {
+                string[] teste = null;
 
+                if (teste.Length > 0)
+                {
+                   
+                }
+
+                var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(c => c.Id == id);
+                if (categoria is null)
+                    return NotFound("Categoria não encontrada...");
+
+                return Ok(categoria);
+            }
+            catch (Exception)
+            {
+
+                _logger.LogError($" ====== ERROR =====");
+            }
 
             //throw new Exception("Exceção ao retonar o produto pelo ID");
 
-            string[] teste = null;
+            return NotFound();
 
-            if(teste.Length > 0)
-            {
-
-            }
-
-            var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(c => c.Id == id);
-            if (categoria is null)
-                return NotFound("Categoria não encontrada...");
-
-            return Ok(categoria);
-        
         }
 
 
