@@ -12,7 +12,7 @@ namespace APICatalogo.Controllers
     public class CategoriasController : Controller
     {
         public readonly AppDbContext _context;
-       private readonly ILogger<CategoriasController> _logger;
+        private readonly ILogger<CategoriasController> _logger;
 
         public CategoriasController(AppDbContext context, ILogger<CategoriasController> logger)
         {
@@ -24,50 +24,29 @@ namespace APICatalogo.Controllers
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            try
-            {
-                //throw  new DataMisalignedException();
-              return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
-
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao conectar no Banco de Dados");
-            }
-
+            return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
         }
 
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Categoria>> Get() => _context.Categorias.AsNoTracking().ToList();
 
-        [HttpGet("{id:int}", Name ="ObterCategoria")]
-        public ActionResult<Categoria> Get(int id) {
-            try
-            {
-                string[] teste = null;
+        [HttpGet("{id:int}", Name = "ObterCategoria")]
+        public ActionResult<Categoria> Get(int id)
+        {
 
-                if (teste.Length > 0)
-                {
-                   
-                }
+            string[] teste = null;
 
-                var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(c => c.Id == id);
-                if (categoria is null)
-                    return NotFound("Categoria não encontrada...");
-
-                return Ok(categoria);
-            }
-            catch (Exception)
+            if (teste.Length > 0)
             {
 
-                _logger.LogError($" ====== ERROR =====");
             }
 
-            //throw new Exception("Exceção ao retonar o produto pelo ID");
+            var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(c => c.Id == id);
+            if (categoria is null)
+                return NotFound("Categoria não encontrada...");
 
-            return NotFound();
+            return Ok(categoria);
 
         }
 
@@ -79,7 +58,7 @@ namespace APICatalogo.Controllers
                 return BadRequest();
 
             _context.Categorias.Add(categoria);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
 
             return new CreatedAtRouteResult("ObterCategoria", new { id = categoria.Id }, categoria);
         }
@@ -101,11 +80,11 @@ namespace APICatalogo.Controllers
         {
             var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
 
-            if(categoria is null)
+            if (categoria is null)
                 return NotFound("Categoria não encontrada...");
 
             _context.Categorias.Remove(categoria);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
 
             return Ok(categoria);
         }
