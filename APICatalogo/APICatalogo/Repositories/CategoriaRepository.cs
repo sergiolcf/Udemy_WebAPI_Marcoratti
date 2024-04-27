@@ -36,6 +36,7 @@ namespace APICatalogo.Repositories
                 throw new ArgumentNullException(nameof(categoria));
 
             _context.Entry(categoria).State = EntityState.Modified;
+            _context.SaveChanges();
 
             return categoria;
         }

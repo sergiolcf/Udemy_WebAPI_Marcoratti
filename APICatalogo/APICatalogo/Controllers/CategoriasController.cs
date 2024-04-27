@@ -42,7 +42,7 @@ namespace APICatalogo.Controllers
             if (categoria is null)
             {
                 _logger.LogWarning($"Categoria com id= {id} não encontrada...");
-                return NotFound();
+                return NotFound($"Categoria com id= {id} não encontrada...");
             }
             return Ok(categoria);
         }
@@ -61,7 +61,7 @@ namespace APICatalogo.Controllers
             return Ok(categoriaCriada);
         }
 
-        [HttpPost("{id:int}")]
+        [HttpPut("{id:int}")]
         public ActionResult Put(int id, Categoria categoria)
         {
             if (id != categoria.Id || categoria is null)
@@ -85,6 +85,5 @@ namespace APICatalogo.Controllers
 
             return Ok(categoriaExcluida);
         }
-
     }
 }
