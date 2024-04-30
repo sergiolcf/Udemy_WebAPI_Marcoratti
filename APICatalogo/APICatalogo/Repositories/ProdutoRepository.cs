@@ -1,7 +1,5 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Repositories
 {
@@ -11,6 +9,22 @@ namespace APICatalogo.Repositories
         public ProdutoRepository(AppDbContext context)
         {
             _context = context;
+        }
+
+
+
+        public IQueryable<Produto> GetProdutos()
+        {
+            return _context.Produtos;
+        }
+
+        public Produto GetProdutoById(int id)
+        {
+            var produto = _context.Produtos?.Find(id);
+            if (produto is null)
+                throw new InvalidOperationException($"Produto com id {id} não encontrado.");
+
+            return produto;
         }
 
         public Produto Create(Produto produto)
@@ -23,28 +37,10 @@ namespace APICatalogo.Repositories
             return produto;
         }
 
-        public IEnumerable<Produto> GetProdutos()
-        {
-            var produtos = _context.Produtos?.ToList();
-            if (produtos is null)
-                throw new ArgumentNullException();
-
-            return produtos;
-        }
-
-        public Produto GetProdutoById(int id)
-        {
-            var produto = _context.Produtos?.Find(id);
-            if (produto is null)
-                throw new ArgumentNullException(nameof(produto));
-
-            return produto;
-        }
-
         public bool UpdateProduto(Produto produto)
         {
             if (produto is null)
-                throw new ArgumentNullException(nameof(produto));
+                throw new InvalidOperationException("Produto é null");
 
             if (_context.Produtos != null && _context.Produtos.Any(p => p.Id == produto.Id))
             {
