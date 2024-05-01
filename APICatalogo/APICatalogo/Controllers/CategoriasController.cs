@@ -12,33 +12,27 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class CategoriasController : Controller
     {
-        private readonly ICategoriaRepository _categoriasRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CategoriasController> _logger;
 
-        public CategoriasController(ICategoriaRepository categoriaRepository, ILogger<CategoriasController> logger)
+        public CategoriasController(IUnitOfWork unitOfWork, ILogger<CategoriasController> logger)
         {
-            _categoriasRepository = categoriaRepository;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
 
-        //[HttpGet("produtos")]
-        //public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
-        //{
-        //    return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
-        //}
-
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var categorias = _categoriasRepository.GetCategorias();
+            var categorias = _unitOfWork.CategoriaRepository.GetAll();
             return Ok(categorias);
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
         {
-            var categoria = _categoriasRepository.GetCategoria(id);
+            var categoria = _unitOfWork.CategoriaRepository.Get(p => p.Id == id); // GetCategoria(id);
             if (categoria is null)
             {
                 _logger.LogWarning($"Categoria com id= {id} não encontrada...");
@@ -57,7 +51,8 @@ namespace APICatalogo.Controllers
                 return BadRequest("Dados Invalidos");
             }
 
-            var categoriaCriada = _categoriasRepository.Create(categoria);
+            var categoriaCriada = _unitOfWork.CategoriaRepository.Create(categoria);
+            _unitOfWork.Commit();
             return Ok(categoriaCriada);
         }
 
@@ -69,19 +64,21 @@ namespace APICatalogo.Controllers
                 _logger.LogWarning($"Dados Invalidos");
                 return BadRequest("Dados Invalidos");
             }
-            _categoriasRepository.Update(categoria);
+            _unitOfWork.CategoriaRepository.Update(categoria);
+            _unitOfWork.Commit();
             return Ok(categoria);
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            var categoria = _categoriasRepository.GetCategoria(id);
+            var categoria = _unitOfWork.CategoriaRepository.Get(p => p.Id == id);
 
             if (categoria is null)
                 return NotFound("Categoria não encontrada...");
 
-            var categoriaExcluida = _categoriasRepository.Delete(id);
+            var categoriaExcluida = _unitOfWork.CategoriaRepository.Delete(categoria);
+            _unitOfWork.Commit();
 
             return Ok(categoriaExcluida);
         }

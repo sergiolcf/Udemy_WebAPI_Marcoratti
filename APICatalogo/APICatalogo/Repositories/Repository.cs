@@ -1,5 +1,7 @@
 ﻿using APICatalogo.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Transactions;
 
 namespace APICatalogo.Repositories
 {
@@ -7,13 +9,17 @@ namespace APICatalogo.Repositories
     {
         protected readonly AppDbContext _context;
 
+        public ICategoriaRepository CategoriaRepository => throw new NotImplementedException();
+
+        public IProdutoRepository ProdutoRepository => throw new NotImplementedException();
+
         public Repository(AppDbContext context)
         {
             _context = context;
         }
         public IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public T? Get(Expression<Func<T, bool>> predicate)
@@ -23,21 +29,22 @@ namespace APICatalogo.Repositories
         public T Create(T entity)
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+
             return entity;
         }
 
         public T Update(T entity)
         {
             _context.Set<T>().Update(entity);
-            _context.SaveChanges();
+
             return entity;
         }
         public T Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
-            _context.SaveChanges();
+
             return entity;
         }
+
     }
 }
