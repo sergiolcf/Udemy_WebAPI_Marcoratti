@@ -1,0 +1,6 @@
+@ApiExerc_HostAddress = http://localhost:5241
+
+GET {{ApiExerc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
