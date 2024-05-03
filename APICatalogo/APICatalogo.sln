@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICatalogo", "APICatalogo\APICatalogo.csproj", "{294A0A7C-1822-4CED-8F08-B8AEF74B8174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExerc", "ApiExerc\ApiExerc.csproj", "{5DD1D87F-9778-49B4-9859-0DAD31D195CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiExerc", "ApiExerc\ApiExerc.csproj", "{5DD1D87F-9778-49B4-9859-0DAD31D195CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExecUm", "ApiExecUm\ApiExecUm.csproj", "{7E9DF651-CD78-406B-887D-FA64E9E7096A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5DD1D87F-9778-49B4-9859-0DAD31D195CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD1D87F-9778-49B4-9859-0DAD31D195CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD1D87F-9778-49B4-9859-0DAD31D195CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

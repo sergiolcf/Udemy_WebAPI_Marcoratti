@@ -1,0 +1,6 @@
+@ApiExecUm_HostAddress = http://localhost:5029
+
+GET {{ApiExecUm_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
