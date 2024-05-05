@@ -4,6 +4,7 @@ using ApiExecUm.Context.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiExecUm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505150252_CorrecaoEnderecoII")]
+    partial class CorrecaoEnderecoII
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace ApiExecUm.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("ContatoPrimarioId")
+                    b.Property<int?>("Contato")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -47,7 +50,7 @@ namespace ApiExecUm.Migrations
                     b.HasIndex("CNPJ")
                         .IsUnique();
 
-                    b.HasIndex("ContatoPrimarioId");
+                    b.HasIndex("Contato");
 
                     b.ToTable("Contas");
                 });
@@ -89,7 +92,7 @@ namespace ApiExecUm.Migrations
                 {
                     b.HasOne("ApiExecUm.Model.Contato", "ContatoPrimario")
                         .WithMany()
-                        .HasForeignKey("ContatoPrimarioId");
+                        .HasForeignKey("Contato");
 
                     b.OwnsOne("ApiExecUm.Model.Endereco", "Endereco", b1 =>
                         {

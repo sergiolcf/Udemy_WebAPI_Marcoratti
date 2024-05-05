@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiExecUm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240503010623_MigracaoInicial")]
-    partial class MigracaoInicial
+    [Migration("20240504012451_AtualizacaoContaContato")]
+    partial class AtualizacaoContaContato
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,10 @@ namespace ApiExecUm.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.Property<int>("Contato")
                         .HasColumnType("int");
 
@@ -45,6 +49,9 @@ namespace ApiExecUm.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CNPJ")
+                        .IsUnique();
+
                     b.HasIndex("Contato");
 
                     b.HasIndex("EnderecoId");
@@ -56,6 +63,16 @@ namespace ApiExecUm.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("varchar(14)");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
 
                     b.Property<int>("EnderecoId")
                         .HasColumnType("int");
@@ -71,6 +88,9 @@ namespace ApiExecUm.Migrations
                         .HasColumnType("varchar(180)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CPF")
+                        .IsUnique();
 
                     b.HasIndex("EnderecoId");
 

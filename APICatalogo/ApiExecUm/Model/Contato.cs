@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace ApiExecUm.Model
 {
+    [Index(nameof(CPF), IsUnique = true)]
     public class Contato
     {
         [Key]
@@ -16,11 +18,17 @@ namespace ApiExecUm.Model
         [StringLength(180)]
         public string SobreNome { get; set; }
 
-        [JsonIgnore]
-        public Conta Empresa { get; set; }
+        [Required]
+        [StringLengthAttribute(14)]
+        public string CPF { get; set; }
+
+        [StringLength(300)]
+        public string Cidade { get; set; }
 
         [JsonIgnore]
-        public Endereco Endereco { get; set; }
+        public Conta? Empresa { get; set; }
 
+        [JsonIgnore]
+        public Endereco? Endereco { get; set; }
     }
 }

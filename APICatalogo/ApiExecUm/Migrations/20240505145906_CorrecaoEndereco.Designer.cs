@@ -4,6 +4,7 @@ using ApiExecUm.Context.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiExecUm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505145906_CorrecaoEndereco")]
+    partial class CorrecaoEndereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace ApiExecUm.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("ContatoPrimarioId")
+                    b.Property<int?>("Contato")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -47,7 +50,7 @@ namespace ApiExecUm.Migrations
                     b.HasIndex("CNPJ")
                         .IsUnique();
 
-                    b.HasIndex("ContatoPrimarioId");
+                    b.HasIndex("Contato");
 
                     b.ToTable("Contas");
                 });
@@ -89,7 +92,7 @@ namespace ApiExecUm.Migrations
                 {
                     b.HasOne("ApiExecUm.Model.Contato", "ContatoPrimario")
                         .WithMany()
-                        .HasForeignKey("ContatoPrimarioId");
+                        .HasForeignKey("Contato");
 
                     b.OwnsOne("ApiExecUm.Model.Endereco", "Endereco", b1 =>
                         {
@@ -106,8 +109,10 @@ namespace ApiExecUm.Migrations
                                 .HasColumnType("varchar(14)");
 
                             b1.Property<string>("Complemento")
-                                .IsRequired()
                                 .HasColumnType("longtext");
+
+                            b1.Property<int>("ContatoId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Logradouro")
                                 .IsRequired()
@@ -124,10 +129,22 @@ namespace ApiExecUm.Migrations
 
                             b1.HasKey("ContaId");
 
+                            b1.HasIndex("ContatoId");
+
                             b1.ToTable("Contas");
 
-                            b1.WithOwner()
+                            b1.WithOwner("Conta")
                                 .HasForeignKey("ContaId");
+
+                            b1.HasOne("ApiExecUm.Model.Contato", "Contato")
+                                .WithMany()
+                                .HasForeignKey("ContatoId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.Navigation("Conta");
+
+                            b1.Navigation("Contato");
                         });
 
                     b.Navigation("ContatoPrimario");
@@ -158,8 +175,10 @@ namespace ApiExecUm.Migrations
                                 .HasColumnType("varchar(14)");
 
                             b1.Property<string>("Complemento")
-                                .IsRequired()
                                 .HasColumnType("longtext");
+
+                            b1.Property<int>("ContaId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Logradouro")
                                 .IsRequired()
@@ -176,10 +195,22 @@ namespace ApiExecUm.Migrations
 
                             b1.HasKey("ContatoId");
 
+                            b1.HasIndex("ContaId");
+
                             b1.ToTable("Contatos");
 
-                            b1.WithOwner()
+                            b1.HasOne("ApiExecUm.Model.Conta", "Conta")
+                                .WithMany()
+                                .HasForeignKey("ContaId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.WithOwner("Contato")
                                 .HasForeignKey("ContatoId");
+
+                            b1.Navigation("Conta");
+
+                            b1.Navigation("Contato");
                         });
 
                     b.Navigation("Empresa");
