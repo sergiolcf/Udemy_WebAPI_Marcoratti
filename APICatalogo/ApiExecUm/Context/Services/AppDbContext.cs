@@ -15,9 +15,17 @@ namespace ApiExecUm.Context.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Conta>()
-                .HasMany(c => c.ContatoList) // Uma conta pode ter muitos contatos
-                .WithOne(c => c.Empresa) // Cada contato pertence a uma única conta
-                .HasForeignKey(c => c.Id);// Chave estrangeira em Contato referenciando Conta
+                .HasMany(c => c.ContatoList)
+                .WithOne(c => c.Empresa)
+                .HasForeignKey(c => c.ContaID)
+                .IsRequired(false); // A chave estrangeira é opcional
+
+            modelBuilder.Entity<Conta>()
+                .HasOne(c => c.ContatoPrimario)
+                .WithMany()
+                .HasForeignKey(c => c.ContatoPrimarioId)
+                .IsRequired(false); // A chave estrangeira é opcional
         }
+
     }
 }

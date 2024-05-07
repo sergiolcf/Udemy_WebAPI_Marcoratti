@@ -17,7 +17,6 @@ namespace ApiExecUm.Model
         [Required]
         public string CNPJ { get; set; }
 
-        [ForeignKey("Contato")]
         public int? ContatoPrimarioId { get; set; }
         public Contato? ContatoPrimario { get; set; }
         public Endereco? Endereco { get; set; }

@@ -4,6 +4,7 @@ using ApiExecUm.Context.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiExecUm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506231607_identityContaContato")]
+    partial class identityContaContato
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,15 +61,10 @@ namespace ApiExecUm.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
-
-                    b.Property<int?>("ContaID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -82,8 +80,6 @@ namespace ApiExecUm.Migrations
 
                     b.HasIndex("CPF")
                         .IsUnique();
-
-                    b.HasIndex("ContaID");
 
                     b.ToTable("Contatos");
                 });
@@ -142,7 +138,7 @@ namespace ApiExecUm.Migrations
                 {
                     b.HasOne("ApiExecUm.Model.Conta", "Empresa")
                         .WithMany("ContatoList")
-                        .HasForeignKey("ContaID");
+                        .HasForeignKey("Id");
 
                     b.OwnsOne("ApiExecUm.Model.Endereco", "Endereco", b1 =>
                         {

@@ -65,28 +65,11 @@ namespace ApiExecUm.Controllers
             return Ok(conta);
         }
 
-        [HttpPut("{id}", Name = "Adicionar com Contato")]
-        public async Task<ActionResult> PutAsync(int id, Contato contato)
-        {
-            var conta = await _unitOfWork.RepositoryConta.GetAsync(c => id == c.Id);
-
-            if (conta is null)
-                return BadRequest("Id de conta não encontrado");
-
-            if (conta.ContatoList != null && conta.ContatoList.Any(ctt => ctt.Id == contato.Id))
-                return BadRequest("Contato Já existe");
-
-            conta.ContatoList.Add(contato);
-            _unitOfWork.Commit();
-
-            return Ok(conta);
-        }
-
         [HttpDelete]
 
-        public ActionResult Delete(Conta conta)
+        public ActionResult Delete(int id)
         {
-            var contaExcluir = _unitOfWork.RepositoryConta.Get(c => c.Id == conta.Id);
+            var contaExcluir = _unitOfWork.RepositoryConta.Get(c => c.Id == id);
 
             if (contaExcluir is null)
                 return BadRequest("Conta não existe");
@@ -94,7 +77,7 @@ namespace ApiExecUm.Controllers
             _unitOfWork.RepositoryConta.Delete(contaExcluir);
             _unitOfWork.Commit();
 
-            return Ok($"Conta {conta} excluida com sucesso!");
+            return Ok(contaExcluir);
         }
     }
 }

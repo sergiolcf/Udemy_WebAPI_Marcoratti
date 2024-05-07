@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ApiExecUm.Model
@@ -22,8 +23,7 @@ namespace ApiExecUm.Model
         [StringLengthAttribute(14)]
         public string CPF { get; set; }
 
-        [StringLength(300)]
-        public string Cidade { get; set; }
+        public int? ContaID { get; set; }
 
         [JsonIgnore]
         public Conta? Empresa { get; set; }

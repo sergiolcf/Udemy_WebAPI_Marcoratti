@@ -58,17 +58,15 @@ namespace ApiExecUm.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(Contato contato)
+        public ActionResult Delete(int id)
         {
-            if (contato is null) return BadRequest("Contato não pode ser nulo");
+            var contatoExcluir = _unitOfWork.RepositoryContato.Get(ctt => ctt.Id == id);
+            if (contatoExcluir is null) return NotFound("Contato não encontrado");
 
-            var removerContato = _unitOfWork.RepositoryContato.Get(c => c.Id == contato.Id);
+            _unitOfWork.RepositoryContato.Delete(contatoExcluir);
             _unitOfWork.Commit();
 
-            if (removerContato is null)
-                return BadRequest("Contato não encontrado");
-
-            return Ok(removerContato);
+            return Ok(contatoExcluir);
         }
     }
 }

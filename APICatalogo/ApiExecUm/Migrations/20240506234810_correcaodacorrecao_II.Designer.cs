@@ -4,6 +4,7 @@ using ApiExecUm.Context.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiExecUm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506234810_correcaodacorrecao_II")]
+    partial class correcaodacorrecao_II
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +37,6 @@ namespace ApiExecUm.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("ContatoPrimarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -47,18 +47,13 @@ namespace ApiExecUm.Migrations
                     b.HasIndex("CNPJ")
                         .IsUnique();
 
-                    b.HasIndex("ContatoPrimarioId");
-
                     b.ToTable("Contas");
                 });
 
             modelBuilder.Entity("ApiExecUm.Model.Contato", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CPF")
                         .IsRequired()
@@ -83,17 +78,14 @@ namespace ApiExecUm.Migrations
                     b.HasIndex("CPF")
                         .IsUnique();
 
-                    b.HasIndex("ContaID");
+                    b.HasIndex("ContaID")
+                        .IsUnique();
 
                     b.ToTable("Contatos");
                 });
 
             modelBuilder.Entity("ApiExecUm.Model.Conta", b =>
                 {
-                    b.HasOne("ApiExecUm.Model.Contato", "ContatoPrimario")
-                        .WithMany()
-                        .HasForeignKey("ContatoPrimarioId");
-
                     b.OwnsOne("ApiExecUm.Model.Endereco", "Endereco", b1 =>
                         {
                             b1.Property<int>("ContaId")
@@ -133,16 +125,20 @@ namespace ApiExecUm.Migrations
                                 .HasForeignKey("ContaId");
                         });
 
-                    b.Navigation("ContatoPrimario");
-
                     b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("ApiExecUm.Model.Contato", b =>
                 {
+                    b.HasOne("ApiExecUm.Model.Conta", null)
+                        .WithOne("ContatoPrimario")
+                        .HasForeignKey("ApiExecUm.Model.Contato", "ContaID");
+
                     b.HasOne("ApiExecUm.Model.Conta", "Empresa")
                         .WithMany("ContatoList")
-                        .HasForeignKey("ContaID");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("ApiExecUm.Model.Endereco", "Endereco", b1 =>
                         {
@@ -191,6 +187,8 @@ namespace ApiExecUm.Migrations
             modelBuilder.Entity("ApiExecUm.Model.Conta", b =>
                 {
                     b.Navigation("ContatoList");
+
+                    b.Navigation("ContatoPrimario");
                 });
 #pragma warning restore 612, 618
         }
