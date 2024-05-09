@@ -1,5 +1,6 @@
 using ApiExecUm.DependencyInjection;
 using ApiExecUm.DependencyInjection.Interface;
+using ApiExecUm.Extensions;
 using ApiExecUm.Logging;
 using ApiExecUm.Logging.Services;
 using Microsoft.AspNetCore.Routing.Constraints;
@@ -36,8 +37,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.ConfigureExceptionHandler();
 }
 
 app.UseHttpsRedirection();

@@ -22,7 +22,7 @@ namespace ApiExecUm.Controllers
 
         public ActionResult<List<Conta>> Get()
         {
-      
+
             _logger.LogInformation("================ GET LISTA DE CONTAS ==================");
             return Ok(_unitOfWork.RepositoryConta.GetAll());
 
