@@ -1,11 +1,9 @@
-﻿using ApiExecUm.Context.Interface;
-using ApiExecUm.Context.Services;
+﻿using ApiExecUm.Context.Services;
 using ApiExecUm.DependencyInjection.Interface;
 using ApiExecUm.Model;
 using ApiExecUm.Repositories.Interface;
 using ApiExecUm.Repositories.Service;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ApiExecUm.DependencyInjection
 {

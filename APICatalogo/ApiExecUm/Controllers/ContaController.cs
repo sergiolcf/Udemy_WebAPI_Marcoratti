@@ -1,4 +1,5 @@
-﻿using ApiExecUm.Model;
+﻿using ApiExecUm.Logging.Services;
+using ApiExecUm.Model;
 using ApiExecUm.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -10,18 +11,21 @@ namespace ApiExecUm.Controllers
     public class ContaController : Controller
     {
         public IUnitOfWork<Conta> _unitOfWork;
-
-        public ContaController(IUnitOfWork<Conta> unitOfWork)
+        private readonly ILogger<Conta> _logger;
+        public ContaController(IUnitOfWork<Conta> unitOfWork, ILogger<Conta> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
-
 
         [HttpGet]
 
         public ActionResult<List<Conta>> Get()
         {
+      
+            _logger.LogInformation("================ GET LISTA DE CONTAS ==================");
             return Ok(_unitOfWork.RepositoryConta.GetAll());
+
         }
 
         [HttpGet("{cnpj}", Name = "ObterContaPorCnpj")]

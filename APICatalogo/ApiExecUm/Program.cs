@@ -1,5 +1,7 @@
 using ApiExecUm.DependencyInjection;
 using ApiExecUm.DependencyInjection.Interface;
+using ApiExecUm.Logging;
+using ApiExecUm.Logging.Services;
 using Microsoft.AspNetCore.Routing.Constraints;
 
 
@@ -12,12 +14,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
+{
+    LogLevel = LogLevel.Information,
+    Path = builder.Configuration["FilePath"]
+}));
+
 builder.Services.AddSingleton<IDependencyInjection, DependencyInjection>();
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 var serviceProvider = builder.Services.BuildServiceProvider();
 var dependencyInjection = serviceProvider.GetService<IDependencyInjection>();
 dependencyInjection.RegisterServices(builder.Services, mySqlConnection);
+
 
 
 

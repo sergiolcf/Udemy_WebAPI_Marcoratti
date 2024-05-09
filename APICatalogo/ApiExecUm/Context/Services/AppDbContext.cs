@@ -26,6 +26,5 @@ namespace ApiExecUm.Context.Services
                 .HasForeignKey(c => c.ContatoPrimarioId)
                 .IsRequired(false); // A chave estrangeira é opcional
         }
-
     }
 }
