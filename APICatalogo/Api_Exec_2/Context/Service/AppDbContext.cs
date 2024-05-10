@@ -25,6 +25,12 @@ namespace Api_Exec_2.Context.Service
                 .WithOne()
                 .HasForeignKey<Conta>(c => c.ContatoPrimarioId)
                 .IsRequired(false); // A chave estrangeira é opcional
+
+            modelBuilder.Entity<Conta>()
+                 .OwnsOne(c => c.Endereco);
+
+            modelBuilder.Entity<Contato>()
+                 .OwnsOne(c => c.Endereco);
         }
     }
 }

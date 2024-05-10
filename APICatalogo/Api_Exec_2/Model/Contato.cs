@@ -23,5 +23,7 @@ namespace Api_Exec_2.Model
 
         public int? ContaId { get; set; }
         public Conta? Conta { get; set; }
+
+        public Endereco Endereco { get; set; }
     }
 }
