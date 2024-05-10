@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICatalogo", "APICatalogo\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiExerc", "ApiExerc\ApiExerc.csproj", "{5DD1D87F-9778-49B4-9859-0DAD31D195CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExecUm", "ApiExecUm\ApiExecUm.csproj", "{7E9DF651-CD78-406B-887D-FA64E9E7096A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiExecUm", "ApiExecUm\ApiExecUm.csproj", "{7E9DF651-CD78-406B-887D-FA64E9E7096A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api_Exec_2", "Api_Exec_2\Api_Exec_2.csproj", "{3A0CCC09-81C1-4159-B673-15C9F5554890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9DF651-CD78-406B-887D-FA64E9E7096A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0CCC09-81C1-4159-B673-15C9F5554890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0CCC09-81C1-4159-B673-15C9F5554890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0CCC09-81C1-4159-B673-15C9F5554890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0CCC09-81C1-4159-B673-15C9F5554890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
