@@ -15,7 +15,7 @@ namespace Api_Exec_2.Logging
         }
         public ILogger CreateLogger(string categoryName)
         {
-            _Loggers.GetOrAdd(categoryName, name => new CustomerLogger(name, _loggerConfigs));
+          return  _Loggers.GetOrAdd(categoryName, name => new CustomerLogger(name, _loggerConfigs));
         }
 
         public void Dispose()
